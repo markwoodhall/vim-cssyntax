@@ -32,6 +32,7 @@ syn match   csLabel			display +^\s*\I\i*\s*:\([^:]\)\@=+
 " modifier
 syn keyword csModifier			abstract const extern internal override private protected readonly sealed static virtual volatile nextgroup=CsClass,CsIface skipwhite
 syn keyword csPublicModifier		public nextgroup=CsClass,CsIface skipwhite
+syn keyword csPrivateModifier		private nextgroup=CsClass,CsIface skipwhite
 " constant
 syn keyword csConstant			false null true
 " exception
@@ -59,6 +60,8 @@ syn match csContextualStatement	/\<\(get\|set\);/me=s+3
 syn match csContextualStatement	/\<\(get\|set\)[[:space:]\n]*{/me=s+3
 syn match csContextualStatement /\<where\>[^:]\+:/me=s+5
 
+syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
+
 "New Declerations
 syn keyword csNewDecleration            new nextgroup=csClass skipwhite
 
@@ -84,6 +87,11 @@ syn region csAttribute start="^\s*\[" end="\]\s*" contains=csString, csVerbatimS
 syn keyword csTodo		contained TODO FIXME XXX NOTE
 syn region  csComment		start="/\*"  end="\*/" contains=@csCommentHook,csTodo,@Spell
 syn match   csComment		"//.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		".*logger.Info.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		".*logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		".*logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		".*logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csLoud		".*logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
 
 " xml markup inside '///' comments
 syn cluster xmlRegionHook	add=csXmlCommentLeader

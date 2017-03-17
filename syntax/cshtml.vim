@@ -8,7 +8,7 @@ if !exists("main_syntax")
   let main_syntax = 'cshtml'
 endif
 
-syn include @aspnetAddCS syntax/cs.vim
+syn include @aspnetAddCS syntax/csharp.vim
 unlet b:current_syntax
 
 syn include @html syntax/html.vim
