@@ -15,7 +15,7 @@ let s:cs_cpo_save = &cpo
 set cpo&vim
 
 " type
-syn keyword csType			bool byte char decimal double float int long object sbyte short string uint ulong ushort void var dynamic Func
+syn keyword csType			bool byte char decimal double float int long object sbyte short string uint ulong ushort void var dynamic Func Assert
 " storage
 syn keyword csTypeDecleration           class enum struct nextgroup=csClass skipwhite
 syn keyword csStorage			delegate interface namespace struct
@@ -30,9 +30,9 @@ syn match csGlobal          display +global::+
 " user labels (see [1] 8.6 Statements)
 syn match   csLabel			display +^\s*\I\i*\s*:\([^:]\)\@=+
 " modifier
-syn keyword csModifier			abstract const extern internal override private protected readonly sealed static virtual volatile nextgroup=CsClass,CsIface skipwhite
-syn keyword csPublicModifier		public nextgroup=CsClass,CsIface skipwhite
-syn keyword csPrivateModifier		private nextgroup=CsClass,CsIface skipwhite
+syn keyword csModifier			abstract const extern internal override private protected readonly sealed static virtual volatile nextgroup=csClass,csIface skipwhite
+syn keyword csPublicModifier		public nextgroup=csClass,csIface,csType skipwhite
+syn keyword csPrivateModifier		private nextgroup=csClass,csIface,csType skipwhite
 " constant
 syn keyword csConstant			false null true
 " exception
@@ -60,18 +60,21 @@ syn match csContextualStatement	/\<\(get\|set\);/me=s+3
 syn match csContextualStatement	/\<\(get\|set\)[[:space:]\n]*{/me=s+3
 syn match csContextualStatement /\<where\>[^:]\+:/me=s+5
 
-syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
+
 
 "New Declerations
 syn keyword csNewDecleration            new nextgroup=csClass skipwhite
 
 "Interface  & Class Identifier
+syn keyword csClass Enum
 syn match csClass contained       /\<[A-Z][A-Za-z]\w\+/ nextgroup=csGeneric
 syn match csClass contained       /\<[A-Z][A-Za-z]\w\+/ nextgroup=csEnclosed
 syn match csIface contained       /\<I[A-Z][A-Za-z]\w\+/ nextgroup=csGeneric
 syn match csIface contained       /\<I[A-Z][A-Za-z]\w\+/ nextgroup=csEnclosed
-syn region csGeneric start="<" end=">" contains=csIface,csClass
-syn region csEnclosed start="(" end=")" contains=csConstant,csType,csString, csVerbatimString, csCharacter, csNumber,csIface,csClass
+syn region csGeneric start="<" end=">" contains=csIface,csClass,csType
+syn region csEnclosed start="(" end=")" contains=csConstant,csType,csString,csVerbatimString,csCharacter,csNumber,csIface,csClass
+syn region csEnclosed start="(" end=")" contains=csConstant,csType,csString,csVerbatimString,csCharacter,csNumber,csIface,csClass
+syn region csEnclosed start="(\[\w*\]" end=")" contains=csConstant,csType,csString,csVerbatimString,csCharacter,csNumber,csIface,csClass
 "syn region csInherits start=":" end="{" contains=csIface,csClass
 
 " Attributes
@@ -92,6 +95,11 @@ syn match   csQuiet		".*logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		".*logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		".*logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csLoud		".*logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csEval		"//= .*$"
+syn match   csEvalError		"//= (\d,\d): error.*$"
+
+syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
+
 
 " xml markup inside '///' comments
 syn cluster xmlRegionHook	add=csXmlCommentLeader
@@ -135,6 +143,8 @@ syn match   csUnicodeNumber	+\\\(u\x\{4}\|U\x\{8}\)+ contained contains=csUnicod
 syn match   csUnicodeSpecifier	+\\[uU]+ contained
 syn region  csVerbatimString	start=+@"+ end=+"+ skip=+""+ contains=csVerbatimSpec,@Spell
 syn match   csVerbatimSpec	+@"+he=s+1 contained
+syn region  csInterpolatedString	start=+$"+ end=+"+ skip=+""+ contains=csInterpolatedSpec,@Spell
+syn match   csInterpolatedSpec	+$"+he=s+1 contained
 syn region  csString		start=+"+  end=+"+ end=+$+ contains=csSpecialChar,csSpecialError,csUnicodeNumber,@Spell
 syn match   csCharacter		"'[^']*'" contains=csSpecialChar,csSpecialCharError
 syn match   csCharacter		"'\\''" contains=csSpecialChar
@@ -176,6 +186,9 @@ hi def link csSpecialCharError		Error
 hi def link csString			String
 hi def link csVerbatimString		String
 hi def link csVerbatimSpec		SpecialChar
+
+hi def link csInterpolatedString		String
+hi def link csInterpolatedSpec		SpecialChar
 hi def link csPreCondit			PreCondit
 hi def link csCharacter			Character
 hi def link csSpecialChar		SpecialChar
