@@ -71,7 +71,7 @@ syn match csClass contained       /\<[A-Z][A-Za-z]\w\+/ nextgroup=csGeneric
 syn match csClass contained       /\<[A-Z][A-Za-z]\w\+/ nextgroup=csEnclosed
 syn match csIface contained       /\<I[A-Z][A-Za-z]\w\+/ nextgroup=csGeneric
 syn match csIface contained       /\<I[A-Z][A-Za-z]\w\+/ nextgroup=csEnclosed
-syn region csGeneric start="<" end=">" contains=csIface,csClass,csType
+"syn region csGeneric start="<" end=">" contains=csIface,csClass,csType
 syn region csEnclosed start="(" end=")" contains=csConstant,csType,csString,csVerbatimString,csCharacter,csNumber,csIface,csClass
 syn region csEnclosed start="(" end=")" contains=csConstant,csType,csString,csVerbatimString,csCharacter,csNumber,csIface,csClass
 syn region csEnclosed start="(\[\w*\]" end=")" contains=csConstant,csType,csString,csVerbatimString,csCharacter,csNumber,csIface,csClass
@@ -95,8 +95,6 @@ syn match   csQuiet		".*logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		".*logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		".*logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csLoud		".*logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csEval		"//= .*$"
-syn match   csEvalError		"//= (\d,\d): error.*$"
 
 syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
 
