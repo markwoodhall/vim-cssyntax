@@ -22,8 +22,7 @@ syn keyword csStorage			delegate interface namespace struct
 syn keyword csInterfaceDecleration      interface nextgroup=csIface skipwhite
 " repeat / condition / label
 syn keyword csRepeat			break continue do for foreach goto return while
-syn keyword csConditional		else if switch
-syn keyword csLabel			case default
+syn keyword csConditional		else if switch case default
 " :: is usually an error in C#, except for the special case of "global::"
 syn match csOperatorError		display +::+
 syn match csGlobal          display +global::+
@@ -90,11 +89,11 @@ syn region csAttribute start="^\s*\[" end="\]\s*" contains=csString, csVerbatimS
 syn keyword csTodo		contained TODO FIXME XXX NOTE
 syn region  csComment		start="/\*"  end="\*/" contains=@csCommentHook,csTodo,@Spell
 syn match   csComment		"//.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		".*logger.Info.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		".*logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		".*logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		".*logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csLoud		".*logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		"_logger.Info.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		"_logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		"_logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csQuiet		"_logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csLoud		"_logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
 
 syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
 
