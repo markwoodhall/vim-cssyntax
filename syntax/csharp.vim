@@ -92,7 +92,8 @@ syn match   csComment		"//.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		"_logger.Info.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		"_logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csQuiet		"_logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		"_logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csLoud		"_logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
+syn match   csLoud		"_logger.Warn.*$" contains=@csCommentHook,csTodo,@Spell
 syn match   csLoud		"_logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
 
 syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
