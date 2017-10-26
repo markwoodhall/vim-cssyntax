@@ -89,12 +89,8 @@ syn region csAttribute start="^\s*\[" end="\]\s*" contains=csString, csVerbatimS
 syn keyword csTodo		contained TODO FIXME XXX NOTE
 syn region  csComment		start="/\*"  end="\*/" contains=@csCommentHook,csTodo,@Spell
 syn match   csComment		"//.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		"_logger.Info.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		"_logger.Debug.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csQuiet		"_logger.BulkDebug.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csLoud		"_logger.Warning.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csLoud		"_logger.Warn.*$" contains=@csCommentHook,csTodo,@Spell
-syn match   csLoud		"_logger.Error.*$" contains=@csCommentHook,csTodo,@Spell
+
+
 
 syn match csAssignment  /\<[A-Z]\+[a-zA-Z]\+\>\s=\s/
 
@@ -136,13 +132,15 @@ syn match   csSpecialError	contained "\\."
 syn match   csSpecialCharError	contained "[^']"
 " [1] 9.4.4.4 Character literals
 syn match   csSpecialChar	contained +\\["\\'0abfnrtvx]+
+
+syn match   csInter             "{\S*}"
 " unicode characters
 syn match   csUnicodeNumber	+\\\(u\x\{4}\|U\x\{8}\)+ contained contains=csUnicodeSpecifier
 syn match   csUnicodeSpecifier	+\\[uU]+ contained
 syn region  csVerbatimString	start=+@"+ end=+"+ skip=+""+ contains=csVerbatimSpec,@Spell
 syn match   csVerbatimSpec	+@"+he=s+1 contained
 syn region  csInterpolatedString	start=+$"+ end=+"+ skip=+""+ contains=csInterpolatedSpec,@Spell
-syn match   csInterpolatedSpec	+$"+he=s+1 contained
+syn match   csInterpolatedSpec	"{\S*}" contained
 syn region  csString		start=+"+  end=+"+ end=+$+ contains=csSpecialChar,csSpecialError,csUnicodeNumber,@Spell
 syn match   csCharacter		"'[^']*'" contains=csSpecialChar,csSpecialCharError
 syn match   csCharacter		"'\\''" contains=csSpecialChar
@@ -151,6 +149,9 @@ syn match   csNumber		"\<\(0[0-7]*\|0[xX]\x\+\|\d\+\)[lL]\=\>"
 syn match   csNumber		"\(\<\d\+\.\d*\|\.\d\+\)\([eE][-+]\=\d\+\)\=[fFdD]\="
 syn match   csNumber		"\<\d\+[eE][-+]\=\d\+[fFdD]\=\>"
 syn match   csNumber		"\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
+
+syn region  csQuiet	start=+_logger.[Debug|BulkDebug|Info].*$"+ end=+")+ skip=+""+ contains=csInterpolatedSpec,@Spell
+syn region  csLoud	start=+_logger.[Warning|Error].*$"+ end=+")+ skip=+""+ contains=csInterpolatedSpec,@Spell
 
 " The default highlighting.
 hi def link csType			Type
